@@ -18,7 +18,12 @@ public class WebServerApplication {
 
     public static void main(String[] args) {
 
-        SpringApplication.run(WebServerApplication.class, args);
+        //SpringApplication.run(WebServerApplication.class, args);
+        // spring application 의 다양한 기능들을 사용하기 위해 위에 문장을 분리해서 구현한다
+        SpringApplication app = new SpringApplication(WebServerApplication.class);
+        // ApplicationStartedEvent 는 자동등록이 안되므로 여기에 추가해줘야 한다.
+        app.addListeners(new SampleListener());
+        app.run();
     }
 
     // ssl 없는 커넥터 생성하는 코드
