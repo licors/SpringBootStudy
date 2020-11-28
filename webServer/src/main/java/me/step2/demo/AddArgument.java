@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 public class AddArgument {
 
     public AddArgument(ApplicationArguments arguments) {
+        System.out.println("add arguments");
         //vm options
         System.out.println("foo : " + arguments.containsOption("foo"));
         //program arguments
