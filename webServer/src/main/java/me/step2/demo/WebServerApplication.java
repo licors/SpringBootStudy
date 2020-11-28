@@ -23,7 +23,7 @@ public class WebServerApplication {
         SpringApplication app = new SpringApplication(WebServerApplication.class);
         // ApplicationStartedEvent 는 자동등록이 안되므로 여기에 추가해줘야 한다.
         app.addListeners(new SampleListener());
-        app.run();
+        app.run(args);
     }
 
     // ssl 없는 커넥터 생성하는 코드
