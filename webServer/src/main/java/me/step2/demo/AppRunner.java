@@ -13,6 +13,9 @@ public class AppRunner implements ApplicationRunner {
     @Autowired
     TestProperties testProperties;
 
+    @Autowired
+    private String hello;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         System.out.println("app runner");
@@ -25,5 +28,7 @@ public class AppRunner implements ApplicationRunner {
         System.out.println(testProperties.getAge());
         System.out.println(testProperties.getFullName());
         System.out.println(testProperties.getSessionTimeout());
+
+        System.out.println(hello);
     }
 }
