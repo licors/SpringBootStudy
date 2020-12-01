@@ -39,4 +39,17 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.name",is(equalTo("ahm"))))
                 .andExpect(jsonPath("$.password",is(equalTo("123"))));
     }
+
+    @Test
+    public void createUser_XML() throws Exception {
+        String userJson = "{\"name\":\"ahm\", \"password\":\"123\"}";
+        mockMvc.perform(post("/users/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_XML)
+                .content(userJson))
+                // .anddo(print()) 기본적으로 들어있는데, 테스트 실패시 출력하고 성공하면 출력 안함
+                .andExpect(status().isOk())
+                .andExpect(xpath("/User/name").string("ahm"))
+                .andExpect(xpath("/User/password").string("123"));
+    }
 }
