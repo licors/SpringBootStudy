@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
 
+    @CrossOrigin(origins = "http://localhost:18080")  //하나만 CORS 지정할 때
     @GetMapping("/hello")
     public String hello() {
         return "hello";
