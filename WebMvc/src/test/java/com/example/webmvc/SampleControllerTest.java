@@ -1,5 +1,6 @@
 package com.example.webmvc;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlHeading1;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -44,5 +45,17 @@ public class SampleControllerTest {
         HtmlPage page = webClient.getPage("/thymeleafTest");
         HtmlHeading1 h1 = page.getFirstByXPath("//h1");
         assertThat(h1.getTextContent()).isEqualToIgnoringCase("ahm");
+    }
+
+    // properties 에서 spring.jackson... 으로 objectMapper 설정 가능
+    @Autowired
+    ObjectMapper objectMapper;
+
+    @Test
+    public void hateoasTest() throws Exception {
+        mockMvc.perform(get("/hateoasTest"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$._links.self").exists());
     }
 }

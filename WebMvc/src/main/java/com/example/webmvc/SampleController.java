@@ -1,5 +1,6 @@
 package com.example.webmvc;
 
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,11 +8,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @Controller
 public class SampleController {
 
     @GetMapping("/thymeleafTest")
-    public String hello(Model model) {
+    public String templateTest(Model model) {
         // ModelAndView 쓸 수도 있지만 리턴값이 뷰 이름이므로 여기서 모델 사용
         model.addAttribute("name","ahm");
         return "thymeleafTest";
@@ -30,5 +34,16 @@ public class SampleController {
         appError.setMessage("error.app.key");
         appError.setReason("IDK IDK IDK");
         return appError;
+    }
+
+    @GetMapping("/hateoasTest")
+    public @ResponseBody EntityModel<Hello> hatoeoasTest() {
+        Hello hello = new Hello();
+        hello.setPrefix("Hey,");
+        hello.setName("ahm");
+
+        EntityModel<Hello> helloEntityModel = new EntityModel<>(hello);
+        helloEntityModel.add(linkTo(methodOn(SampleController.class).hatoeoasTest()).withSelfRel());
+        return helloEntityModel;
     }
 }
