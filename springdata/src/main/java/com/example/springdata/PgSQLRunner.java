@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.sql.Statement;
 
 @Component
-public class MysqlRunner implements ApplicationRunner {
+public class PgSQLRunner implements ApplicationRunner {
 
     @Autowired
     DataSource dataSource;
@@ -23,13 +23,16 @@ public class MysqlRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         try (Connection connection = dataSource.getConnection()) {
             System.out.println(dataSource.getClass());
+            //url 을 보고 스프링부트가 드라이버를 추측
+            System.out.println(connection.getMetaData().getDriverName());
             System.out.println(connection.getMetaData().getURL());
             System.out.println(connection.getMetaData().getUserName());
 
             Statement statement = connection.createStatement();
-            String sql = "CREATE TABLE USER(ID INTEGER NOT NULL, name VARCHAR(255), PRIMARY KEY (id))";
+            //Postegre 는 USER 가 키워드라 테이블이름으로 못쓴다.
+            String sql = "CREATE TABLE account(ID INTEGER NOT NULL, name VARCHAR(255), PRIMARY KEY (id))";
             statement.executeUpdate(sql);
         }
-        jdbcTemplate.execute("INSERT INTO USER VALUES (1, 'ahm')");
+        jdbcTemplate.execute("INSERT INTO account VALUES (1, 'ahm')");
     }
 }
